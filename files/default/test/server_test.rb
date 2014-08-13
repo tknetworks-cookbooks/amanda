@@ -49,4 +49,21 @@ describe_recipe 'amanda::server' do
     .and(:group, 'backup')
     .and(:mode, '4750')
   end
+
+  it 'install configs' do
+    file('/etc/amanda/MyConfig/amanda.conf')
+    .must_exist
+    .must_include('org "MyConfig"')
+    .must_include('infofile "/srv/amanda/state/curinfo')
+    .with(:owner, 'amanda')
+    .and(:group, 'backup')
+    .and(:mode, '0640')
+
+    file('/etc/amanda/MyConfig/disklist')
+    .must_exist
+    .must_include('localhost /etc simple-gnutar-local')
+    .with(:owner, 'amanda')
+    .and(:group, 'backup')
+    .and(:mode, '0640')
+  end
 end

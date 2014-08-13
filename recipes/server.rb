@@ -97,3 +97,23 @@ when 'openbsd'
 else
   raise NotImplementedError
 end
+
+execute 'do-amcheck' do
+  user node['amanda']['user']
+  command "amcheck #{node['amanda']['conf_name']}"
+  action :nothing
+end
+
+%w{
+  disklist
+  amanda.conf
+}.each do |f|
+  template "#{node['amanda']['conf_dir']}/#{node['amanda']['conf_name']}/#{f}" do
+    owner node['amanda']['user']
+    group node['amanda']['group']
+    mode '0640'
+    source "#{node['amanda']['conf_name']}/#{f}.erb"
+    cookbook node['amanda']['conf_cookbook']
+    notifies :run, 'execute[do-amcheck]'
+  end
+end

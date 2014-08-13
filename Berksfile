@@ -10,4 +10,5 @@ end
 
 group :integration do
   cookbook 'minitest-handler'
+  cookbook 'amanda_test', :path => './test/cookbooks/amanda_test'
 end
