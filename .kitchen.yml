@@ -1,0 +1,16 @@
+---
+driver_plugin: vagrant
+driver_config:
+  require_chef_omnibus: false
+
+platforms:
+- name: vagrant-openbsd-55
+  driver_config:
+    box: vagrant-openbsd-55-chef
+    box_url: http://projects.tsuntsun.net/~nabeken/boxes/vagrant-openbsd-55-chef.box
+
+suites:
+- name: server
+  run_list:
+  - recipe[amanda::server]
+  - recipe[minitest-handler]
