@@ -51,7 +51,7 @@ when 'openbsd'
     tar zxf #{File.basename(tarball_url)} \
       && cd amanda-#{node['amanda']['package']['version']} \
       && ./configure #{node['amanda']['package']['configure']} \
-      && gmake -j4 \
+      && gmake \
       && gmake install
     EOS
     not_if 'test -f /usr/local/sbin/amcheck'
