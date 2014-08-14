@@ -41,6 +41,7 @@ when 'openbsd'
   user node['amanda']['user'] do
     action :create
     home '/home/amanda'
+    supports :managehome => true
     group node['amanda']['group']
   end
 
