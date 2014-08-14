@@ -101,7 +101,8 @@ end
 
 execute 'do-amcheck' do
   user node['amanda']['user']
-  command "amcheck #{node['amanda']['conf_name']}"
+  group node['amanda']['group']
+  command "/usr/local/sbin/amcheck #{node['amanda']['conf_name']}"
   action :nothing
 end
 
