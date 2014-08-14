@@ -1,5 +1,5 @@
 #
-# Author:: Ken-ichi TANABE (<nabeken@tknetworks.org>)
+# Author:: TANABE Ken-ichi (<nabeken@tknetworks.org>)
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -13,12 +13,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
+require 'serverspec'
+include Serverspec::Helper::Exec
+include Serverspec::Helper::DetectOS
 
-case node['platform_family']
-when 'debian'
-  package 'amanda-client' do
-    action :install
+RSpec.configure do |c|
+  c.before :all do
+    c.path = '/sbin:/usr/sbin'
   end
-else
-  raise NotImplementedError
 end

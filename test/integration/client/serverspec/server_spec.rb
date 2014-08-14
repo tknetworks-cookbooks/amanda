@@ -1,5 +1,5 @@
 #
-# Author:: Ken-ichi TANABE (<nabeken@tknetworks.org>)
+# Author:: TANABE Ken-ichi (<nabeken@tknetworks.org>)
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -13,12 +13,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
+require 'spec_helper'
 
-case node['platform_family']
-when 'debian'
-  package 'amanda-client' do
-    action :install
+describe 'amanda::client' do
+  it "installs amanda-client package" do
+    expect(package("amanda-client")).to be_installed
   end
-else
-  raise NotImplementedError
 end

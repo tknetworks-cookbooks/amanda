@@ -8,6 +8,12 @@ platforms:
   driver_config:
     box: vagrant-openbsd-55-chef
     box_url: http://projects.tsuntsun.net/~nabeken/boxes/vagrant-openbsd-55-chef.box
+- name: debian-wheezy
+  driver_config:
+    box: debian-wheezy
+    box_url: http://projects.tsuntsun.net/~nabeken/boxes/vagrant-debian-wheezy.box
+  run_list:
+  - recipe[apt]
 
 suites:
 - name: server
@@ -15,6 +21,12 @@ suites:
   - recipe[amanda_test]
   - recipe[amanda::server]
   - recipe[minitest-handler]
+  attributes:
+    amanda:
+      conf_cookbook: "amanda_test"
+- name: client
+  run_list:
+  - recipe[amanda::client]
   attributes:
     amanda:
       conf_cookbook: "amanda_test"

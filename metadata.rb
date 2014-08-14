@@ -8,12 +8,14 @@ version          '0.1.0'
 
 %w{
   openbsd
+  debian
 }.each do |os|
   supports os
 end
 
 %w{
   chef-openbsd
+  apt
 }.each do |c|
   depends c
 end
