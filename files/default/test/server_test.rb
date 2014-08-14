@@ -66,4 +66,21 @@ describe_recipe 'amanda::server' do
     .and(:group, 'backup')
     .and(:mode, '0640')
   end
+
+  it 'creates .ssh directory' do
+    directory('/home/amanda/.ssh')
+    .must_exist
+    .with(:owner, 'amanda')
+    .and(:group, 'backup')
+    .and(:mode, '0700')
+  end
+
+  it 'sets ssh key' do
+    file('/home/amanda/.ssh/id_rsa')
+    .must_exist
+    .must_include('SSH_KEY')
+    .with(:owner, 'amanda')
+    .and(:group, 'backup')
+    .and(:mode, '0600')
+  end
 end

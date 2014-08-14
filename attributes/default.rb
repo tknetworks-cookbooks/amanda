@@ -23,6 +23,7 @@ default['amanda']['group'] = 'backup'
 default['amanda']['srv_dir'] = '/srv/amanda'
 default['amanda']['conf_dir'] = '/etc/amanda'
 default['amanda']['state_dir'] = '/var/amanda'
+default['amanda']['home_dir'] = '/home/amanda'
 
 default['amanda']['conf_name'] = 'MyConfig'
 default['amanda']['conf_cookbook'] = 'amanda'

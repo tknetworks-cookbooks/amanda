@@ -38,9 +38,10 @@ when 'openbsd'
   group node['amanda']['group'] do
     action :create
   end
+
   user node['amanda']['user'] do
     action :create
-    home '/home/amanda'
+    home node['amanda']['home_dir']
     supports :managehome => true
     group node['amanda']['group']
   end
@@ -61,6 +62,8 @@ when 'openbsd'
   %W{
     #{node['amanda']['conf_dir']}
     #{node['amanda']['conf_dir']}/MyConfig
+    #{node['amanda']['home_dir']}
+    #{node['amanda']['home_dir']}/.ssh
     #{node['amanda']['srv_dir']}
     #{node['amanda']['srv_dir']}/holding
     #{node['amanda']['srv_dir']}/state
@@ -95,6 +98,16 @@ when 'openbsd'
       recursive true
     end
   end
+
+  ssh_keys = Chef::EncryptedDataBagItem.load('ssh_keys', 'amanda-server')
+  file "#{node['amanda']['home_dir']}/.ssh/id_rsa" do
+    mode 0600
+    owner node['amanda']['user']
+    group node['amanda']['group']
+    content ssh_keys["key"]
+    backup false
+  end
+
 else
   raise NotImplementedError
 end

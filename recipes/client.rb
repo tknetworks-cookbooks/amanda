@@ -19,6 +19,24 @@ when 'debian'
   package 'amanda-client' do
     action :install
   end
+
+  directory "#{node['etc']['passwd']['backup']['dir']}/.ssh" do
+    owner 'backup'
+    group 'backup'
+    mode '0700'
+  end
+
+  template "#{node['etc']['passwd']['backup']['dir']}/.ssh/authorized_keys" do
+    owner 'backup'
+    group 'backup'
+    mode '0600'
+    source 'authorized_keys.erb'
+    variables(
+      :from => node['amanda']['client']['from'],
+      :command => '/usr/lib/amanda/amandad -auth=ssh amdump',
+      :pubkey => node['amandad']['client']['pubkey'],
+    )
+  end
 else
   raise NotImplementedError
 end

@@ -21,6 +21,7 @@ suites:
   - recipe[amanda_test]
   - recipe[amanda::server]
   - recipe[minitest-handler]
+  encrypted_data_bag_secret_key_path: test/integration/secret_key
   attributes:
     amanda:
       conf_cookbook: "amanda_test"
