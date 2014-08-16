@@ -34,7 +34,7 @@ when 'debian'
     variables(
       :from => node['amanda']['client']['from'],
       :command => '/usr/lib/amanda/amandad -auth=ssh amdump',
-      :pubkey => node['amandad']['client']['pubkey'],
+      :pubkey => node['amanda']['client']['pubkey'],
     )
   end
 else

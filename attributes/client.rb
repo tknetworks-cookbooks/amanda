@@ -1,5 +1,5 @@
 #
-# Author:: TANABE Ken-ichi (<nabeken@tknetworks.org>)
+# Author:: Ken-ichi TANABE (<nabeken@tknetworks.org>)
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -13,19 +13,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-require 'spec_helper'
 
-describe 'amanda::client' do
-  it "installs amanda-client package" do
-    expect(package("amanda-client")).to be_installed
-  end
-
-  it "installs correct authorized_keys" do
-    [
-      'from="192.168.1.1"',
-      'PUBKEY',
-    ].each do |l|
-      expect(file("/var/backups/.ssh/authorized_keys").content).to include l
-    end
-  end
-end
+default['amanda']['client']['from'] = ''
+default['amanda']['client']['pubkey'] = ''
