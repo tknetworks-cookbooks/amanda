@@ -108,6 +108,17 @@ when 'openbsd'
     backup false
   end
 
+  template "#{node['amanda']['home_dir']}/.ssh/authorized_keys" do
+    owner node['amanda']['user']
+    group node['amanda']['group']
+    mode '0600'
+    source 'authorized_keys.erb'
+    variables(
+      :command => '/usr/local/lib/amanda/amandad -auth=ssh amindexd amidxtaped',
+      :pubkey => node['amanda']['server']['pubkey'],
+    )
+  end
+
 else
   raise NotImplementedError
 end

@@ -15,17 +15,36 @@
 #
 require 'spec_helper'
 
-describe 'amanda::client' do
-  it "installs amanda-client package" do
-    expect(package("amanda-client")).to be_installed
-  end
+describe package('amanda-client') do
+  it { should be_installed }
+end
 
-  it "installs correct authorized_keys" do
-    [
-      'from="192.168.1.1"',
-      'PUBKEY',
-    ].each do |l|
-      expect(file("/var/backups/.ssh/authorized_keys").content).to include l
-    end
+describe file("/var/backups/.ssh/authorized_keys") do
+  [
+    'from="192.168.1.1"',
+    'PUBKEY',
+  ].each do |l|
+    its(:content) {
+      should include l
+    }
   end
+end
+
+describe file('/var/backups/.ssh/id_rsa') do
+  it {
+    should contain 'SSH_KEY'
+    should be_file
+    should be_owned_by 'backup'
+    should be_grouped_into 'backup'
+    should be_mode 600
+  }
+end
+
+describe file('/var/backups/.ssh') do
+  it {
+    should be_directory
+    should be_owned_by 'backup'
+    should be_grouped_into 'backup'
+    should be_mode 700
+  }
 end

@@ -75,10 +75,19 @@ describe_recipe 'amanda::server' do
     .and(:mode, '0700')
   end
 
-  it 'sets ssh key' do
+  it 'sets ssh private key' do
     file('/home/amanda/.ssh/id_rsa')
     .must_exist
     .must_include('SSH_KEY')
+    .with(:owner, 'amanda')
+    .and(:group, 'backup')
+    .and(:mode, '0600')
+  end
+
+  it 'sets ssh public key' do
+    file('/home/amanda/.ssh/authorized_keys')
+    .must_exist
+    .must_include('no-port-forwarding,no-X11-forwarding,no-agent-forwarding,command="/usr/local/lib/amanda/amandad -auth=ssh amindexd amidxtaped" CLIENT_PUBKEY')
     .with(:owner, 'amanda')
     .and(:group, 'backup')
     .and(:mode, '0600')

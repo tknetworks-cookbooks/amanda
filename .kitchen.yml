@@ -25,9 +25,12 @@ suites:
   attributes:
     amanda:
       conf_cookbook: "amanda_test"
+      server:
+        pubkey: "CLIENT_PUBKEY"
 - name: client
   run_list:
   - recipe[amanda::client]
+  encrypted_data_bag_secret_key_path: test/integration/secret_key
   attributes:
     amanda:
       conf_cookbook: "amanda_test"

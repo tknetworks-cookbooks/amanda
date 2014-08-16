@@ -37,6 +37,15 @@ when 'debian'
       :pubkey => node['amanda']['client']['pubkey'],
     )
   end
+
+  ssh_keys = Chef::EncryptedDataBagItem.load('ssh_keys', 'amanda-client')
+  file "#{node['etc']['passwd']['backup']['dir']}/.ssh/id_rsa" do
+    mode 0600
+    owner 'backup'
+    group 'backup'
+    content ssh_keys["key"]
+    backup false
+  end
 else
   raise NotImplementedError
 end

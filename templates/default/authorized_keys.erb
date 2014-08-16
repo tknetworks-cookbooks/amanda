@@ -1,1 +1,1 @@
-from="<%= @from %>",no-port-forwarding,no-X11-forwarding,no-agent-forwarding,command="<%= @command %>" <%= @pubkey %>
+<%- unless !@from.nil? && @from.empty? -%>from="<%= @from %>",<%- end -%>no-port-forwarding,no-X11-forwarding,no-agent-forwarding,command="<%= @command %>" <%= @pubkey %>
