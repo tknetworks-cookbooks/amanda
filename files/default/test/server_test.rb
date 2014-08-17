@@ -78,7 +78,7 @@ describe_recipe 'amanda::server' do
   it 'sets ssh private key' do
     file('/home/amanda/.ssh/id_rsa')
     .must_exist
-    .must_include('SSH_KEY')
+    .must_include('----BEGIN RSA PRIVATE KEY-----')
     .with(:owner, 'amanda')
     .and(:group, 'backup')
     .and(:mode, '0600')
@@ -87,7 +87,7 @@ describe_recipe 'amanda::server' do
   it 'sets ssh public key' do
     file('/home/amanda/.ssh/authorized_keys')
     .must_exist
-    .must_include('no-port-forwarding,no-X11-forwarding,no-agent-forwarding,command="/usr/local/lib/amanda/amandad -auth=ssh amindexd amidxtaped" CLIENT_PUBKEY')
+    .must_include('no-port-forwarding,no-X11-forwarding,no-agent-forwarding,command="/usr/local/libexec/amanda/amandad -auth=ssh amindexd amidxtaped" ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQD4yyx7vfZ635j5kd5j7ZnkT9hJ6eKCF0eTMlBBbOB9e8WR6NPiKimnnht24Fn64Vco/VYSleXIiHv4StOpvzyoJPX33lE6f6PRW18EDSAtWBN+xDEcSn+5BnZIn02yonr9zfrtMNF3cD9h3BlbWukrNRwZKU7T9ABJCa/xr5NPb7l+bhAGRQKvRS+iFqvSSP8c4hrH+8OhTwShw4jyZsOUkU9/t2Xx+w1D+Ma2lwdO0RD7RQIfQqPwzacmpR0EHjDTFsMLrViUSoXxDbsOCut7bs+AcBVH9AX5VCctR3R0qD6vgKxjZu7Kpi3nulrt94V2mRHm06vfml6/a9sNsyCD amanda-test-ssh-key')
     .with(:owner, 'amanda')
     .and(:group, 'backup')
     .and(:mode, '0600')
