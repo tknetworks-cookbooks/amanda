@@ -28,7 +28,7 @@ when 'openbsd'
   r.run_action(:create_if_missing)
 
   %w{
-    glib2 gmake gtar--static
+    glib2 gmake coreutils gtar--static
   }.each do |pkg|
     package pkg do
       action :install
@@ -53,6 +53,8 @@ when 'openbsd'
     tar zxf #{File.basename(tarball_url)} \
       && cd amanda-#{node['amanda']['package']['version']} \
       && ./configure #{node['amanda']['package']['configure']} \
+      && mv config/config.h{,.orig} \
+      && sed -e 's|/usr/bin/sort|/usr/local/bin/gsort|g' config/config.h.orig > config/config.h \
       && gmake \
       && gmake install
     EOS
